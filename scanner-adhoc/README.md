@@ -38,7 +38,7 @@ print(b)
 
 - Spaces, newlines, and tabulators are **white spaces**.
 - **Comments** starts with `#` and extends to the end of the line.
-- A **numerical literal** is a sequence of one or more digits optionally followed another sequence of one or more digits.
+- A **numerical literal** is a sequence of one or more digits optionally followed by a dot and another sequence of one or more digits.
 - An **identifier** is a sequence of one or more letters, digits and underscores, beginning with a letter, that is not a keyword.
 - The **keywords** are: `print`.
 - The **operators** are: `:=`, `+`, `-`, `*` and `/`.
