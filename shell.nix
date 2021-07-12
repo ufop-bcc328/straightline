@@ -12,6 +12,10 @@ pkgs.stdenv.mkDerivation {
     ocamlPackages.dune_2
     ocamlPackages.findlib # essential
     ocamlPackages.ocaml
+    ocamlPackages.ppxlib
+    ocamlPackages.ppx_import
+    ocamlPackages.ppx_deriving
+    ocamlPackages.menhir
     ocamlPackages.utop
     ocamlPackages.ocaml-lsp
 
