@@ -12,7 +12,7 @@ let main () =
   in
   
   try
-    Parser.program Lexer.token lexbuf;
+    Parser.program Lexer.token lexbuf
   with
   | Error.Error (loc, msg) ->
      Format.printf "%a error: %s\n" Location.pp_location loc msg;
