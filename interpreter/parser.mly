@@ -16,7 +16,36 @@
 
 %start <unit> program
 
+%left SEMICOLON
+%left PLUS MINUS
+%left TIMES DIV
+
 %%
 
-program :
-| EOF { }
+program:
+| stm EOF { }
+;
+
+stm:
+| stm SEMICOLON stm { }
+| ID ASSIGN exp { }
+| PRINT LPAREN explist  RPAREN { }
+;
+
+exp:
+| ID { }
+| NUM { }
+| exp binop exp { }
+| LPAREN stm COMMA exp RPAREN { }
+;
+
+explist:
+| separated_nonempty_list(COMMA, exp) { }
+;
+
+%inline binop:
+| PLUS { }
+| MINUS { }
+| TIMES { }
+| DIV { }
+;
