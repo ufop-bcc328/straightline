@@ -25,6 +25,16 @@ _Binop_ → `-`
 _Binop_ → `*`  
 _Binop_ → `/`  
 
+## Operator Precedence and Associativity
+
+In order to resolve possible conflicts during syntactic analysis, the following relation of operator precedence and associativity, in descending order, should be observed:
+
+| operators | associativity |
+|-|-|
+|`*` `\`|left|
+|`+` `-`|left|
+|`:=`|right|
+
 ## Lexical symbols
 
 - Spaces, newlines, and tabulators are **white spaces**.
