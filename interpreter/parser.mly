@@ -1,5 +1,20 @@
 // parser.mly
 
+%{
+    let memory = Hashtbl.create 0
+
+    let rec print_list lst =
+      match lst with
+      | [] -> print_newline ()
+      | [x] -> print_float x; print_newline ()
+      | x::rest -> print_float x; print_string " "; print_list rest
+    
+    let variable v =
+      match Hashtbl.find_opt memory v with
+      | None -> 0.0
+      | Some x -> x
+%}
+
 %token                 EOF
 %token                 PLUS
 %token                 MINUS
@@ -28,24 +43,24 @@ program:
 
 stm:
 | stm SEMICOLON stm { }
-| ID ASSIGN exp { }
-| PRINT LPAREN explist  RPAREN { }
+| x=ID ASSIGN e=exp { Hashtbl.replace memory  x e}
+| PRINT LPAREN l=explist RPAREN { print_list l }
 ;
 
 exp:
-| ID { }
-| NUM { }
-| exp binop exp { }
-| LPAREN stm COMMA exp RPAREN { }
+| v=ID { variable v }
+| c=NUM { c }
+| a=exp f=binop b=exp { f a b }
+| LPAREN stm COMMA x=exp RPAREN { x }
 ;
 
 explist:
-| separated_nonempty_list(COMMA, exp) { }
+| l=separated_nonempty_list(COMMA, exp) { l }
 ;
 
 %inline binop:
-| PLUS { }
-| MINUS { }
-| TIMES { }
-| DIV { }
+| PLUS { (+.) }
+| MINUS { (-.) }
+| TIMES { ( *.) }
+| DIV { (/.) }
 ;
