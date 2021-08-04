@@ -4,6 +4,8 @@ set -e
 set -u
 set -o pipefail
 
+opam_exe_dir="$HOME/.local/bin"
+
 opam_packages=(
     dune
     ppx_import
@@ -18,6 +20,10 @@ opam_packages=(
     # llvm
 )
 
+# echo "$opam_exe_dir" |
+#     sh <(curl -sL https://raw.githubusercontent.com/ocaml/opam/master/shell/install.sh)
+
+which opam
 # opam init --bare --yes
 # opam switch create 4.11.2
 opam init --yes
