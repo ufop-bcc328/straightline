@@ -12,8 +12,19 @@ let main () =
   in
   
   try
-    Parser.program Lexer.token lexbuf
-  with
+    let ast = Parser.program Lexer.token lexbuf in
+    print_endline "Abstract syntax tree:";
+    print_endline "============================================================";
+    print_endline (Absyn.show_stm ast);
+    print_endline "============================================================";
+    let tree = Absyntree.flat_nodes (Absyntree.tree_of_stm ast) in
+    let boxtree = Tree.box_of_tree tree in
+    print_endline (Box.string_of_box boxtree);
+    print_endline "============================================================";
+    print_endline (Tree.string_of_tree tree);
+    print_endline "============================================================";
+    Interpreter.exec ast
+   with
   | Error.Error (loc, msg) ->
      Format.printf "%a error: %s\n" Location.pp_location loc msg;
      exit 1

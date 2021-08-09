@@ -1,5 +1,6 @@
 (executable
  (name driver)
+ (libraries camomile)
  (preprocess
   (staged_pps
     ppx_import

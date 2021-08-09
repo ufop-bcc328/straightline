@@ -1,18 +1,7 @@
 // parser.mly
 
 %{
-    let memory = Hashtbl.create 0
-
-    let rec print_list lst =
-      match lst with
-      | [] -> print_newline ()
-      | [x] -> print_float x; print_newline ()
-      | x::rest -> print_float x; print_string " "; print_list rest
-    
-    let variable v =
-      match Hashtbl.find_opt memory v with
-      | None -> 0.0
-      | Some x -> x
+  open Absyn
 %}
 
 %token                 EOF
@@ -29,7 +18,7 @@
 %token <float>         NUM
 %token <Symbol.symbol> ID
 
-%start <unit> program
+%start <stm> program
 
 %left SEMICOLON
 %left PLUS MINUS
@@ -38,20 +27,20 @@
 %%
 
 program:
-| stm EOF { }
+| s=stm EOF { s }
 ;
 
 stm:
-| stm SEMICOLON stm { }
-| x=ID ASSIGN e=exp { Hashtbl.replace memory  x e}
-| PRINT LPAREN l=explist RPAREN { print_list l }
+| a=stm SEMICOLON b=stm { CompoundStm (a, b) }
+| x=ID ASSIGN e=exp { AssignStm (x, e) }
+| PRINT LPAREN l=explist RPAREN { PrintStm l }
 ;
 
 exp:
-| v=ID { variable v }
-| c=NUM { c }
-| a=exp f=binop b=exp { f a b }
-| LPAREN stm COMMA x=exp RPAREN { x }
+| v=ID { IdExp v }
+| c=NUM { NumExp c }
+| a=exp op=binop b=exp { OpExp (op, a, b) }
+| LPAREN s=stm COMMA x=exp RPAREN { EseqExp (s, x) }
 ;
 
 explist:
@@ -59,8 +48,8 @@ explist:
 ;
 
 %inline binop:
-| PLUS { (+.) }
-| MINUS { (-.) }
-| TIMES { ( *.) }
-| DIV { (/.) }
+| PLUS { Plus }
+| MINUS { Minus }
+| TIMES { Times }
+| DIV { Div }
 ;
