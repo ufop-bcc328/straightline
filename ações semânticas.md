@@ -26,3 +26,15 @@
 - Atributo para os **operadores**:
   - função de dois argumentos a ser usada para calcular o valor da operação
 - Estude a implementação dada como exemplo.
+
+## Construção da árvore sintática
+
+- Definir os tipos de dados adequados para representação da árvore de sintaxe abstrata.
+- Escrever as ações semânticas que constroem a árvore sintática para cada construção da linguagem, junto às regras de produção da gramática.
+- O resultado do analisador sintático é a árvore sintática, que pode ser usada no restante do compilador.
+
+## Anotação da localização
+
+- É desejável reportar as localizações (incluindo por exemplo número de linha e coluna) onde as frases se encontram no programa fonte.
+- Pode-se estender os tipos usados para representação das árvores sintáticas, incluindo esta informação.
+- O analisador sintático oferece recursos para acessar a informação de localização quando uma frase é reconhecida.
